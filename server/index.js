@@ -7,6 +7,8 @@ const app = express();
 const PORT = 8080;
 require("dotenv").config();
 
+app.use(express.json());
+
 try {
   mongoose.connect(process.env.MONGODB_URL);
     console.log("ok")
