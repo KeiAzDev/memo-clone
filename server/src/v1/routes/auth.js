@@ -6,7 +6,7 @@ env.config();
 
 import User from '../models/user.js';
 import { validate } from '../handlers/validation.js';
-import { register } from '../controllers/user.js';
+import { makeKey, unKey } from '../controllers/user.js';
 
 const router = Router();
 
@@ -28,9 +28,15 @@ router.post('/register',
   }),
 
   validate,
-  register
-  )
+  makeKey
+  );
 
-
+  //login api
+router.post('/login', 
+  body('username').isLength({min: 8}).withMessage('ユーザー名は8文字以上である必要があります'),
+  body('password').isLength({min: 8}).withMessage('パスワードは8文字以上である必要があります'),
+  validate,
+  unKey
+)
 
 export default router;
