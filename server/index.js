@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import CryptoJS from 'crypto-js';
 import JWT from 'jsonwebtoken';
-import { body } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import User from './src/v1/models/user.js';
 import env from 'dotenv';
 env.config();
@@ -22,7 +22,28 @@ try {
 }
 
 //register
-app.post('/register', async (req, res) => {
+app.post('/register', 
+  body('username').isLength({min: 8})
+  .withMessage('ユーザー名は8文字以上である必要があります'), 
+  body('password').isLength({min: 8})
+  .withMessage('パスワードは8文字以上である必要があります'),
+  body('confirmPassword').isLength({min: 8})
+  .withMessage('確認用パスワードは8文字以上である必要があります'),
+  body('username').custom((value) => {
+    return User.findOne({username: value}).then((user) => {
+      if(user) {
+        return Promise.reject('このユーザー名はすでに使われています');
+      }
+    });
+  }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+    next();
+  },
+  async (req, res) => {
   const password = req.body.password;
 
   try {
