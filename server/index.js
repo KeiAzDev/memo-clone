@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import CryptoJS from 'crypto-js';
 import JWT from 'jsonwebtoken';
+import { body } from 'express-validator';
 import User from './src/v1/models/user.js';
 import env from 'dotenv';
 env.config();
