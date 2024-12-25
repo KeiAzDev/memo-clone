@@ -10,9 +10,11 @@ env.config();
 const app = express();
 const PORT = 8080;
 
+app.use(express.json());
+
 //DB connect
 try {
-  mongoose.connect(process.env.MONGODB_URL);
+  await mongoose.connect(process.env.MONGODB_URL);
   console.log('DBと接続中');
 } catch(err) {
   console.log(err);
@@ -24,9 +26,9 @@ app.post('/register', async (req, res) => {
 
   try {
     //パスワードの暗号化
-    req.body.password = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY);
+    req.body.password = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString();
     //ユーザーの新規作成
-    const user = await new User.create(req.body);
+    const user = await User.create(req.body);
     //jwt
     const token = JWT.sign({id: user._id}, process.env.TOKEN_SECRET_KEY, {expiresIn: '24h'});
     return res.status(200).json({user, token});
