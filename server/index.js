@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import CryptoJS from 'crypto-js';
+import JWT from 'jsonwebtoken';
 import User from './src/v1/models/user.js';
 import env from 'dotenv';
 env.config();
@@ -27,9 +28,10 @@ app.post('/register', async (req, res) => {
     //ユーザーの新規作成
     const user = await new User.create(req.body);
     //jwt
-
-  } catch {
-
+    const token = JWT.sign({id: user._id}, process.env.TOKEN_SECRET_KEY, {expiresIn: '24h'});
+    return res.status(200).json({user, token});
+  } catch(err) {
+    return res.status(500).json(err);
   }
 })
 
