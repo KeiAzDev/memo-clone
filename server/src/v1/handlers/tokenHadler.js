@@ -1,5 +1,5 @@
 import JWT from 'jsonwebtoken';
-import User from '../models/user';
+import User from '../models/user.js';
 
 //クライアントから渡されたJWTが正常か検証
 const tokenDecode = (req) => {
