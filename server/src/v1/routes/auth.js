@@ -7,6 +7,7 @@ env.config();
 import User from '../models/user.js';
 import { validate } from '../handlers/validation.js';
 import { makeKey, unKey } from '../controllers/user.js';
+import { verityToken } from '../handlers/tokenHadler.js';
 
 const router = Router();
 
@@ -37,6 +38,11 @@ router.post('/login',
   body('password').isLength({min: 8}).withMessage('パスワードは8文字以上である必要があります'),
   validate,
   unKey
-)
+);
+
+//JWT認証API
+router.post('/verify-token', verityToken, (req, res) => {
+  return res.status(200).json({user: req.user});
+});
 
 export default router;
