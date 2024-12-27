@@ -11,8 +11,8 @@ const AuthLayout = () => {
           <img src={memoLogo} alt="" style={{width: 100, height: 100, mb: 3,}} />
           memo帳クローン開発
         </Box>
+        <Outlet />
       </Container>
-      <Outlet />
     </div>
   )
 }
