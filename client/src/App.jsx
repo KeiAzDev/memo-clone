@@ -3,19 +3,27 @@ import AuthLayout from './components/layout/AuthLayout'
 import Login from './pages/Login'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Register from './pages/Register'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { blueGrey } from '@mui/material/colors'
 
 function App() {
 
+  const theme = createTheme({
+    palette: { primary: blueGrey },
+  })
 
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<AuthLayout />}>
-          <Route path='login' element={<Login />}/>
-          <Route path='Register' element={<Register />}/>
-        </Route>
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme} >
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path='/' element={<AuthLayout />}>
+            <Route path='login' element={<Login />}/>
+            <Route path='Register' element={<Register />}/>
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   )
 }
 

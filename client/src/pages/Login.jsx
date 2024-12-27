@@ -3,7 +3,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 
 const Login = () => {
   return (
-    <div>Login <AccessAlarmIcon/></div>
+    <div>Login</div>
   )
 }
 
