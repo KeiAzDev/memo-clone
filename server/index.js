@@ -1,13 +1,17 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import env from 'dotenv';
-import router from './src/v1/routes/auth.js';
+import router from './src/v1/routes/index.js';
+import cors from 'cors';
 env.config();
 
 
 const app = express();
 const PORT = 8080;
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+}))
 app.use(express.json());
 app.use('/api/v1', router);
 
