@@ -7,7 +7,7 @@ env.config();
 import User from '../models/user.js';
 import { validate } from '../handlers/validation.js';
 import { makeKey, unKey } from '../controllers/user.js';
-import { verityToken } from '../handlers/tokenHadler.js';
+import { verifyToken } from '../handlers/tokenHandler.js';
 
 const router = Router();
 
@@ -41,7 +41,7 @@ router.post('/login',
 );
 
 //JWT認証API
-router.post('/verify-token', verityToken, (req, res) => {
+router.post('/verify-token', verifyToken, (req, res) => {
   return res.status(200).json({user: req.user});
 });
 

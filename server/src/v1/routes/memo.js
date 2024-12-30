@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { create } from '../controllers/memo.js';
-import { verityToken } from '../handlers/tokenHadler.js';
+import { verifyToken } from '../handlers/tokenHandler.js';
 
 const router = Router();
 
 //メモを作成
-router.post('/', verityToken, create);
+router.post('/', verifyToken, create);
 
 export default router;

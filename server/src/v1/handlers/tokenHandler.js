@@ -18,9 +18,9 @@ const tokenDecode = (req) => {
 };
 
 //JWT認証を検証するためのミドルウェア
-export const verityToken = async (req, res ,next) => {
+export const verifyToken = async (req, res ,next) => {
   const tokenDecoded = tokenDecode(req);
-  if (tokenDecode) {
+  if (tokenDecoded) {
     //jwtが一致するユーザーを探してくる
     const user = await User.findById(tokenDecoded.id);
     if(!user) {

@@ -2,7 +2,7 @@ import Memo from '../models/memo.js';
 
 export const create = async(req, res) => {
   try {
-    const memoCount = await Memo.find().count();
+    const memoCount = await Memo.countDocuments();
     //メモ新規作成
     const memo = await Memo.create({
       user: req.user._id,
