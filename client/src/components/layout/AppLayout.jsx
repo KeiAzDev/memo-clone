@@ -4,10 +4,13 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import memoLogo from '../../assets/images/logo.png'
 import authUtils from '../../utils/authUtils'
 import Sidebar from '../common/Sidebar'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/features/userSlice'
 
 const AppLayout = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //jwtを持っているか
@@ -16,6 +19,9 @@ const AppLayout = () => {
       const user = await authUtils.isAuthenticated();
       if(!user) {
         navigate('/login');
+      } else {
+        //ユーザーをストアに保存
+        dispatch(setUser(user));
       }
     };
     checkAuth();
