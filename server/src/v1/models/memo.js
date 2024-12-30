@@ -31,6 +31,6 @@ const memoSchema = new mongoose.Schema({
   },
 });
 
-const Memo = mongoose.model('Memo', userSchema);
+const Memo = mongoose.model('Memo', memoSchema);
 
 export default Memo;
