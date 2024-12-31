@@ -40,7 +40,7 @@ export const update = async(req, res) => {
   try {
     if(title === '') req.body.title = '無題';
     if(description === '') req.body.description = 'ここに自由に記入してください';
-    
+
     const memo = await Memo.findOne({user: req.user._id, _id: memoId});
     if(!memo) return res.status(404).json({message: 'メモが存在しません'});
 
@@ -49,6 +49,20 @@ export const update = async(req, res) => {
     });
 
     res.status(200).json(updatedMemo);
+  } catch(err) {
+    res.status(500).json(err);
+  }
+};
+
+export const deleteMemo = async(req, res) => {
+  const {memoId} = req.params;
+  try {
+    const memo = await Memo.findOne({user: req.user._id, _id: memoId});
+    if(!memo) return res.status(404).json({message: 'メモが存在しません'});
+
+    await Memo.findByIdAndDelete({_id: memoId});
+
+    res.status(200).json({message: 'メモを削除しました'});
   } catch(err) {
     res.status(500).json(err);
   }

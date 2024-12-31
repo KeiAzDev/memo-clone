@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { create, getAllMemo, getOne, update } from '../controllers/memo.js';
+import { create, deleteMemo, getAllMemo, getOne, update } from '../controllers/memo.js';
 import { verifyToken } from '../handlers/tokenHandler.js';
 
 const router = Router();
@@ -15,5 +15,8 @@ router.get('/:memoId', verifyToken, getOne);
 
 //ログインしているユーザーが投稿したメモを更新
 router.put('/:memoId', verifyToken, update);
+
+//ログインしているユーザーが投稿したメモを削除
+router.delete('/:memoId', verifyToken, deleteMemo);
 
 export default router;
