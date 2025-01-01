@@ -18,6 +18,7 @@ const EmojiPicker = (props) => {
     emojiCode.forEach((el) => codesArray.push('0x' + el));
     const emoji = String.fromCodePoint(...codesArray);
     setIsShowPicker(false);
+    props.onChange(emoji);
   };
 
   return (

@@ -80,6 +80,19 @@ const Memo = () => {
     }
   };
 
+  const onIconChange = async (newIcon) => {
+    let temp = [...memos];
+    const index = temp.findIndex((e) => e._id === memoId);
+    temp[index] = {...temp[index], icon: newIcon};
+    setIcon(newIcon);
+    dispatch(setMemo(temp));
+    try {
+      await memoApi.update(memoId, {icon: newIcon});
+    } catch(err) {
+      alert(err);
+    }
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -92,7 +105,7 @@ const Memo = () => {
       </Box>
       <Box sx={{ p: '10px 50px' }}>
         <Box>
-          <EmojiPicker icon={icon}/>
+          <EmojiPicker icon={icon} onChange={onIconChange}/>
           <TextField onChange={updateTitle} value={title} placeholder='無題' variant='outlined' fullWidth sx={{ '.MuiOutlinedInput-input': { padding: 0 }, '.MuiOutlinedInput-notchedOutline': { border: 'none' }, '.MuiOutlinedInput-root': { fontSize: '2rem', fontWeight: '700' } }} />
           <TextField onChange={updateDescription} value={description} placeholder='追加' variant='outlined' fullWidth sx={{ '.MuiOutlinedInput-input': { padding: 0 }, '.MuiOutlinedInput-notchedOutline': { border: 'none' }, '.MuiOutlinedInput-root': { fontSize: '1rem' } }} />
         </Box>
